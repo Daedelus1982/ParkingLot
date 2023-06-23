@@ -3,16 +3,8 @@ package parking
 data class Car(val reg:String, val color: String)
 
 fun main() {
-    val lot = MutableList<Car?>(4) { null }
-    lot.park(Car("KA-01-HH-9999", "White"))
-    lot.park(Car("KA-01-HH-3672", "White"))
-    lot.park(Car("Rs-P-N-21", "Red"))
-    lot.park(Car("Rs-P-N-22", "Red"))
-    main2(lot)
-}
-fun main2(lot: MutableList<Car?>) {
-    //var parking: MutableList<Car?>? = null
-    var parking = lot
+    var parking: MutableList<Car?>? = null
+
     do {
         val args = readln().split(" ")
         val command = args[0]
@@ -87,9 +79,8 @@ fun MutableList<Car?>.spotByColor(color: String): String {
 }
 
 fun MutableList<Car?>.spotByReg(reg: String): String {
-    val spot = mapIndexed { index, car ->  if (car?.reg.equals(reg, true)) index + 1 else -1 }
-        .filter { it != -1 }
-        .firstOrNull()
+    val spot = mapIndexed { index, car -> if (car?.reg.equals(reg, true)) index + 1 else -1 }
+        .firstOrNull { it != -1 }
 
     return if (spot == null) "No cars with registration number $reg were found." else "$spot"
 }
